@@ -33,7 +33,9 @@ export class RecipesService {
     // Hence we use .splice() which exposes a copy
     return this.recipes.slice();
   }
-
+  getRecipe(index: number){
+    return this.recipes[index];
+  }
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
   this.slService.addIngredients(ingredients);
   }
