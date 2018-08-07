@@ -1,11 +1,12 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Ingredient} from '../shared/ingredient.model';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingListService {
-  ingredientsChanged = new EventEmitter<Ingredient[]>();
+  ingredientsChanged = new Subject<Ingredient[]>();
   private ingredients: Ingredient[] = [
     new Ingredient('tablespoon minced mint leaves', 4),
     new Ingredient('tablespoon garlic paste', 2),
@@ -21,11 +22,11 @@ export class ShoppingListService {
   addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
     // once we update the array, we emit the EE with a new copy of the updated array
-    this.ingredientsChanged.emit(this.ingredients.slice());
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
   addIngredients(ingredients: Ingredient[]) {
     // push all the ingredients using ES6 spread operator
   this.ingredients.push(...ingredients);
-  this.ingredientsChanged.emit(this.ingredients.slice());
+  this.ingredientsChanged.next(this.ingredients.slice());
   }
 }
