@@ -7,6 +7,7 @@ import {Subject} from 'rxjs/Subject';
 })
 export class ShoppingListService {
   ingredientsChanged = new Subject<Ingredient[]>();
+  ingredientEditing = new Subject<number>();
   private ingredients: Ingredient[] = [
     new Ingredient('tablespoon minced mint leaves', 4),
     new Ingredient('tablespoon garlic paste', 2),
@@ -18,6 +19,9 @@ export class ShoppingListService {
   getIngredients() {
     return this.ingredients.slice();
   }
+  getIngredient(index: number) {
+    return this.ingredients[index];
+  }
 
   addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
@@ -28,5 +32,13 @@ export class ShoppingListService {
     // push all the ingredients using ES6 spread operator
   this.ingredients.push(...ingredients);
   this.ingredientsChanged.next(this.ingredients.slice());
+  }
+  updateIngredient(index: number, changedIng: Ingredient) {
+    this.ingredients[index] = changedIng;
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
+  deleteIngredient(index: number) {
+    this.ingredients.splice(index, 1);
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 }
