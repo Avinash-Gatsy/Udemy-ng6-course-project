@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  recipesURLFirebase: '<your-firebase-database-url'
+  recipesURLFirebase: '<your-firebase-database-url>'
 };
