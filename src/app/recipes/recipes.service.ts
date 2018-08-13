@@ -29,6 +29,11 @@ export class RecipesService {
   ];
 
   constructor(private slService: ShoppingListService) {}
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipeChanged.next(this.recipes.slice());
+  }
   getRecipes() {
     // if we return this.recipes; we will expose the array reference and hence it can be modified from outside.
     // Hence we use .splice() which exposes a copy
