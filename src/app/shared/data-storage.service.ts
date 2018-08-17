@@ -4,18 +4,23 @@ import {RecipesService} from '../recipes/recipes.service';
 import {Recipe} from '../recipes/recipe.model';
 import {map} from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import {AuthService} from '../auth/auth.service';
 @Injectable({
   providedIn: 'root'
 })
 export class DataStorageService {
-  constructor(private http: HttpClient, private recipeService: RecipesService) {}
+  constructor(private http: HttpClient,
+              private recipeService: RecipesService,
+              private authService: AuthService) {}
 
   storeRecipes() {
-    return this.http.put(environment.recipesURLFirebase, this.recipeService.getRecipes());
+    const token = this.authService.getToken();
+    return this.http.put(`${environment.recipesURLFirebase}?auth=${token}`, this.recipeService.getRecipes());
   }
 
   getRecipes() {
-    this.http.get<Recipe[]>(environment.recipesURLFirebase)
+    const token = this.authService.getToken();
+    this.http.get<Recipe[]>(`${environment.recipesURLFirebase}?auth=${token}`)
       .pipe(map((recipes) => {
         for (const recipe of recipes) {
           if (!recipe['ingredient']) {
