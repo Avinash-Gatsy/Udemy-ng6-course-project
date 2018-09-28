@@ -16,18 +16,19 @@ export class ShoppingListService {
 
   constructor() { }
 
-  getIngredients() {
-    return this.ingredients.slice();
-  }
+  // getIngredients() {
+  //   return this.ingredients.slice();
+  // }
   getIngredient(index: number) {
     return this.ingredients[index];
   }
 
-  addIngredient(ingredient: Ingredient) {
-    this.ingredients.push(ingredient);
-    // once we update the array, we emit the EE with a new copy of the updated array
-    this.ingredientsChanged.next(this.ingredients.slice());
-  }
+  // addIngredient(ingredient: Ingredient) {
+  //   this.ingredients.push(ingredient);
+  //   // once we update the array, we emit the EE with a new copy of the updated array
+  //   this.ingredientsChanged.next(this.ingredients.slice());
+  // }
+
   addIngredients(ingredients: Ingredient[]) {
     // push all the ingredients using ES6 spread operator
   this.ingredients.push(...ingredients);

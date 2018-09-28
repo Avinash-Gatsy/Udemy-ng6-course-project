@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpRequest} from '@angular/common/http';
 import {RecipesService} from '../recipes/recipes.service';
 import {Recipe} from '../recipes/recipe.model';
 import {map} from 'rxjs/operators';
@@ -15,7 +15,19 @@ export class DataStorageService {
 
   storeRecipes() {
     const token = this.authService.getToken();
-    return this.http.put(`${environment.recipesURLFirebase}?auth=${token}`, this.recipeService.getRecipes());
+    // const headers = new HttpHeaders().set('Authorization', 'Bearer asfasfasf');
+    // return this.http.put(`${environment.recipesURLFirebase}`,
+    //   this.recipeService.getRecipes(),
+    //   {
+    //     observe: 'events',
+    //     params: new HttpParams().set('auth', token)
+    //   });
+    const req = new HttpRequest('PUT', `${environment.recipesURLFirebase}`, this.recipeService.getRecipes(),
+      {
+        reportProgress: true,
+        // params: new HttpParams().set('auth', token)
+      });
+    return this.http.request(req);
   }
 
   getRecipes() {
