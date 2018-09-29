@@ -1,5 +1,6 @@
 import {Ingredient} from '../../shared/ingredient.model';
 import * as ShoppingListActions from './shopping-list.actions';
+import {st} from '@angular/core/src/render3';
 
 const initialState = {
   ingredients : [
@@ -14,9 +15,15 @@ export function shoppingListReducer(state = initialState, action: ShoppingListAc
       console.log({...state, ingredients: [...state.ingredients, action.payload]});
       // we cannot modify the state, instead we can replace the existing state with a new state
       return {
+        // return all the properties from old state and the new info form payload
         ...state,
         ingredients: [...state.ingredients, action.payload]
-      }
+      };
+    case ShoppingListActions.ADD_INGREDIENTS:
+      return{
+        ...state,
+        ingredients: [...state.ingredients, ...action.payload]
+      };
     default:
       return state;
   }

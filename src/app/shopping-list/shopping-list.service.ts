@@ -29,11 +29,11 @@ export class ShoppingListService {
   //   this.ingredientsChanged.next(this.ingredients.slice());
   // }
 
-  addIngredients(ingredients: Ingredient[]) {
-    // push all the ingredients using ES6 spread operator
-  this.ingredients.push(...ingredients);
-  this.ingredientsChanged.next(this.ingredients.slice());
-  }
+  // addIngredients(ingredients: Ingredient[]) {
+  //   // push all the ingredients using ES6 spread operator
+  // this.ingredients.push(...ingredients);
+  // this.ingredientsChanged.next(this.ingredients.slice());
+  // }
   updateIngredient(index: number, changedIng: Ingredient) {
     this.ingredients[index] = changedIng;
     this.ingredientsChanged.next(this.ingredients.slice());
