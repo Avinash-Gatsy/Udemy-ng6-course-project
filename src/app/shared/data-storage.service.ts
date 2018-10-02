@@ -5,16 +5,19 @@ import {Recipe} from '../recipes/recipe.model';
 import {map} from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import {AuthService} from '../auth/auth.service';
+import {Store} from '@ngrx/store';
+import * as fromApp from '../store/app.reducers';
+
 @Injectable({
   providedIn: 'root'
 })
 export class DataStorageService {
   constructor(private http: HttpClient,
               private recipeService: RecipesService,
-              private authService: AuthService) {}
+              private authService: AuthService,
+              private store: Store<fromApp.AppState>) {}
 
   storeRecipes() {
-    const token = this.authService.getToken();
     // const headers = new HttpHeaders().set('Authorization', 'Bearer asfasfasf');
     // return this.http.put(`${environment.recipesURLFirebase}`,
     //   this.recipeService.getRecipes(),
@@ -31,8 +34,7 @@ export class DataStorageService {
   }
 
   getRecipes() {
-    const token = this.authService.getToken();
-    this.http.get<Recipe[]>(`${environment.recipesURLFirebase}?auth=${token}`)
+    this.http.get<Recipe[]>(`${environment.recipesURLFirebase}`)
       .pipe(map((recipes) => {
         for (const recipe of recipes) {
           if (!recipe['ingredient']) {
